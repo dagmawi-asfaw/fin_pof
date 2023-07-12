@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum AccountType {
+  CHECKING
+  SAVING
+}
+
+
+model BankAccount {
+ id                   Int             @id @default(autoincrement())
+ accountNumber        Int 
+ bankName             String
+ accountType          AccountType
+ country              String          @default("ET")
+ currency             String          @default("ETB")
+ startingBalance      Float           @default(0)
+ currentBalance       Float           @default(0)
+ createdAt            DateTime        @default(now())
+ updatedAt            DateTime        @updatedAt
+
+ @@map("bank_account")
+}
